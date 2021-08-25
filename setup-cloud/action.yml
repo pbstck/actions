@@ -1,4 +1,4 @@
-name: Deliver
+name: Login AWS and Artifactory
 runs:
   using: "composite"
   steps:
@@ -8,6 +8,6 @@ runs:
         aws-secret-access-key: ${{ env.CICD_TOOLING_FULL_ACCESS_SECRET }}
         aws-region: "eu-west-1"
     - uses: google-github-actions/setup-gcloud@master
-    - name: deliver
-      shell: bash
-      run: make deliver
+      with:
+        project_id: 'pubstack-artifactory'
+        service_account_key: ${{ env.CICD_ARTIFACTORY_KEY }}

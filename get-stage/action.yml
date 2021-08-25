@@ -1,0 +1,17 @@
+name: Get stage
+outputs:
+  target_env:
+    description: prout
+    value: ${{ steps.get_current_stage.outputs.target_env }}
+runs:
+  using: composite
+  steps:
+  - uses: actions/checkout@v2
+  - name: get current stage
+    shell: bash
+    id: get_current_stage
+    run: |
+      ls scripts/get_current_env.sh
+      TARGET_ENV=$(scripts/get_current_env.sh $GITHUB_REF)
+      echo "Env: $TARGET_ENV"
+      echo "::set-output name=target_env::$TARGET_ENV"
