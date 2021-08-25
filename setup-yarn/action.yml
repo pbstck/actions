@@ -1,7 +1,17 @@
 name: Yarn cache action
+inputs:
+  node-version:
+    description: 'version'
+    required: false
+    default: '14.x'
 runs:
-  using: "composite"
+  using: composite
   steps:
+    - uses: actions/setup-node@v2
+      with:
+        node-version: ${{ inputs.node-version }}
+    - run: npm install -g yarn
+      shell: bash
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       shell: bash
@@ -12,9 +22,6 @@ runs:
         path: |
           ${{ steps.yarn-cache-dir-path.outputs.dir }}
           node_modules
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ inputs.node-version }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-yarn-
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14.x'
+            ${{ runner.os }}-yarn-${{ inputs.node-version }}-${{ hashFiles('**/yarn.lock') }}
