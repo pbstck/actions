@@ -1,11 +1,12 @@
 name: Login AWS and Artifactory
+description: Login to AWS CLI and GCP Artifactory
 runs:
   using: "composite"
   steps:
     - uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.CICD_TOOLING_FULL_ACCESS_KEY }}
-        aws-secret-access-key: ${{ env.CICD_TOOLING_FULL_ACCESS_SECRET }}
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
         aws-region: "eu-west-1"
     - uses: google-github-actions/setup-gcloud@master
       with:

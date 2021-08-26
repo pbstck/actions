@@ -1,0 +1,21 @@
+name: Setup Go with cache
+inputs:
+  go-version:
+    description: 'version'
+    required: false
+    default: '1.14.2'
+description: Install go with the desired version and cache go mod
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@v1
+      with:
+        go-version: ${{ inputs.go-version }}
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.mod') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
