@@ -1,0 +1,37 @@
+name: Setup Rust with cache
+inputs:
+  rust-version:
+    description: 'version'
+    required: false
+    default: '1.53.0'
+description: Install Rust with the desired version and cache
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache@v2
+      name : Cache rust toolchain
+      with:
+        path: /usr/share/rust/.rustup
+        key: ${{ runner.os }}-run-toolchain-rust
+    - name: Install Rust toolchain
+      uses: actions-rs/toolchain@v1
+      id: toolchain
+      with:
+        toolchain: ${{ inputs.rust-version }}
+        override: true
+        target: x86_64-unknown-linux-musl
+        components: clippy,rustfmt
+    - name: Install musl tools
+      shell: bash
+      run: sudo apt-get install musl-tools
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}-${{ github.job }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
