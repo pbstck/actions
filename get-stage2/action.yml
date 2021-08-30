@@ -1,0 +1,7 @@
+name: Get stage
+outputs:
+  target_env:
+    description: The stage
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
