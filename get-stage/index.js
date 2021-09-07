@@ -1,10 +1,10 @@
-import { getEnvironnement } from "./getEnvironnement";
+import {  getEnvironnement } from "./getEnvironnement.js";
 
-import {setOutput} from "@actions/core";
-import {context} from "@actions/github";
+import core from "@actions/core";
+import GitHub from "@actions/github";
 
 try {
-    let environnement = getEnvironnement(context.ref);
+    let environnement = getEnvironnement(GitHub.context.ref);
     core.setOutput('target_env', environnement);
 } catch (e) {
     core.setFailed(e.message)

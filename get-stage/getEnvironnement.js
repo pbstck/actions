@@ -1,4 +1,4 @@
-const getEnvironnement = (githubRef) => {
+export const getEnvironnement = (githubRef) => {
     const isTag = () => {
         let regExp = new RegExp("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}Z-");
         return regExp.test(githubRef)
@@ -18,5 +18,3 @@ const getEnvironnement = (githubRef) => {
         }
     }
 }
-
-export { getEnvironnement }
