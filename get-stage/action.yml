@@ -1,4 +1,10 @@
 name: Get stage
+description: |
+    Returns the environment depending on the current GITHUB_REF
+    It follows theses rules:
+    - If the branch name is main or master => dev
+    - If it's a tag with format YYYY-MM-DDTHH-mm-SSZ-beta => beta
+    - If it's a tag with format YYYY-MM-DDTHH-mm-SSZ-prod => prod
 outputs:
   target_env:
     description: The stage
