@@ -1,10 +1,10 @@
 name: Setup Go with cache
+description: Install go with the desired version and cache go mod
 inputs:
   go-version:
     description: 'version'
     required: false
     default: '1.14.2'
-description: Install go with the desired version and cache go mod
 runs:
   using: composite
   steps:

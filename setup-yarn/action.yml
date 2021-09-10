@@ -1,10 +1,10 @@
 name: Yarn cache action
+description: Install yarn with the desired version and cache its directory
 inputs:
   node-version:
     description: 'version'
     required: false
     default: '14.x'
-description:
 runs:
   using: composite
   steps:

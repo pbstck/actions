@@ -1,10 +1,10 @@
 name: Setup Rust with cache
+description: Install Rust with the desired version and cache
 inputs:
   rust-version:
     description: 'version'
     required: false
     default: '1.53.0'
-description: Install Rust with the desired version and cache
 runs:
   using: composite
   steps:
