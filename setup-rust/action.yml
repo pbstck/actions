@@ -12,7 +12,7 @@ runs:
       name : Cache rust toolchain
       with:
         path: /usr/share/rust/.rustup
-        key: ${{ runner.os }}-run-toolchain-rust
+        key: ${{ runner.os }}-{{rust-version}}-run-toolchain-rust
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
       id: toolchain
@@ -23,7 +23,7 @@ runs:
         components: clippy,rustfmt
     - name: Install musl tools
       shell: bash
-      run: sudo apt-get install musl-tools
+      run: sudo apt-get install musl-tools musl-dev
     - uses: actions/cache@v2
       with:
         path: |
@@ -31,7 +31,7 @@ runs:
           ~/.cargo/registry/index/
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
-          target/
+          **/target/
         key: ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}-${{ github.job }}
         restore-keys: |
           ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
