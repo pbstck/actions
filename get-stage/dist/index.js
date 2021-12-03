@@ -19,7 +19,7 @@ module.exports = JSON.parse("{\"_args\":[[\"@octokit/rest@16.43.2\",\"/home/vale
 /***/ }),
 
 /***/ 4556:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __nccwpck_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
 // ESM COMPAT FLAG
@@ -59,9 +59,9 @@ var github = __nccwpck_require__(5438);
 
 try {
     let environnement = getEnvironnement(github.context.ref);
-    core.setOutput('target_env', environnement);
+    (0,core.setOutput)('target_env', environnement);
 } catch (e) {
-    core.setFailed(e.message)
+    (0,core.setFailed)(e.message)
 }
 
 
