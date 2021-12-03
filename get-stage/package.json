@@ -15,7 +15,6 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "type": "module",
   "homepage": "https://github.com/pbstck/actions#README",
   "dependencies": {
     "@actions/core": "^1.2.5",
