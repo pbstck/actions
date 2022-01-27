@@ -4,7 +4,7 @@ inputs:
   rust-version:
     description: 'version'
     required: false
-    default: '1.53.0'
+    default: '1.58.1'
 runs:
   using: composite
   steps:
@@ -19,11 +19,11 @@ runs:
       with:
         toolchain: ${{ inputs.rust-version }}
         override: true
-        target: x86_64-unknown-linux-musl
+        target: x86_64-unknown-linux-gnu
         components: clippy,rustfmt
-    - name: Install musl tools
+    - name: Install cross
       shell: bash
-      run: sudo apt-get install musl-tools musl-dev
+      run: cargo install cross
     - uses: actions/cache@v2
       with:
         path: |
