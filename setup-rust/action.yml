@@ -8,11 +8,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/cache@v2
-      name : Cache rust toolchain
-      with:
-        path: /usr/share/rust/.rustup
-        key: ${{ runner.os }}-{{rust-version}}-run-toolchain-rust
+    - uses: Swatinem/rust-cache@v1
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
       id: toolchain
@@ -24,14 +20,3 @@ runs:
     - name: Install cross
       shell: bash
       run: cargo install cross
-    - uses: actions/cache@v2
-      with:
-        path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
-          **/target/
-        key: ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}-${{ github.job }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
