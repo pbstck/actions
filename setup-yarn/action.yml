@@ -23,6 +23,7 @@ runs:
         path: |
           ${{ steps.yarn-cache-dir-path.outputs.dir }}
           node_modules
+          frontend/*/node_modules
           */node_modules
         key: ${{ runner.os }}-yarn-${{ inputs.node-version }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
