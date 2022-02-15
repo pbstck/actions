@@ -22,6 +22,7 @@ runs:
       with:
         path: |
           ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          .yarn
           node_modules
           frontend/*/node_modules
           */node_modules
