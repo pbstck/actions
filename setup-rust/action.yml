@@ -5,6 +5,9 @@ inputs:
     description: 'version'
     required: false
     default: '1.58.1'
+  working-directory:
+    description: "The working directory this action should operate in"
+    required: false
 runs:
   using: composite
   steps:
@@ -16,7 +19,10 @@ runs:
         override: true
         target: x86_64-unknown-linux-gnu
         components: clippy,rustfmt
+    - uses: Swatinem/rust-cache@v1
+      with:
+        working-directory: ${{ inputs.working-directory }}
     - name: Install cross
       shell: bash
       run: cargo install cross
-    - uses: Swatinem/rust-cache@v1
+
