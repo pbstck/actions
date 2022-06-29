@@ -4,34 +4,25 @@ inputs:
   rust-version:
     description: 'version'
     required: false
-    default: '1.53.0'
+    default: '1.58.1'
+  working-directory:
+    description: "The working directory this action should operate in"
+    required: false
 runs:
   using: composite
   steps:
-    - uses: actions/cache@v2
-      name : Cache rust toolchain
-      with:
-        path: /usr/share/rust/.rustup
-        key: ${{ runner.os }}-{{rust-version}}-run-toolchain-rust
     - name: Install Rust toolchain
       uses: actions-rs/toolchain@v1
       id: toolchain
       with:
         toolchain: ${{ inputs.rust-version }}
         override: true
-        target: x86_64-unknown-linux-musl
+        target: x86_64-unknown-linux-gnu
         components: clippy,rustfmt
-    - name: Install musl tools
-      shell: bash
-      run: sudo apt-get install musl-tools musl-dev
-    - uses: actions/cache@v2
+    - uses: Swatinem/rust-cache@v1
       with:
-        path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
-          **/target/
-        key: ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}-${{ github.job }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-${{ steps.toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
+        working-directory: ${{ inputs.working-directory }}
+    - name: Install cross
+      shell: bash
+      run: cargo install cross
+
